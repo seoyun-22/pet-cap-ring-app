@@ -16,7 +16,7 @@ IMAGE_SAVE_DIR = "qr_captured_rings"
 CSV_FILE = "qr_detection_logs.csv"
 
 if not os.path.exists(IMAGE_SAVE_DIR):
-    os.makedirs(IMAGE_SAVE_DIR)
+    os.makedirs(IMAGE_SAVE_DIR,exist_ok=True)
 
 if not os.path.exists(CSV_FILE):
     df = pd.DataFrame(columns=["Timestamp", "Local_Image_Path", "Detected_Count"])
