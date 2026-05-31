@@ -31,11 +31,10 @@ def init_roboflow():
 
 project, model = init_roboflow()
 
-st.title("♻️ 캡링 고화질 수집 시스템")
-st.write("아이폰/갤럭시 기본 카메라로 선명하게 찍은 사진을 올리면 원래 모델 성능 그대로 완벽하게 인식합니다.")
+st.title("♻️ PET cap ring Detection System ")
+st.write("아이폰/갤럭시 기본 카메라로 찍은 사진을 올리면 PET cap ring을 인식합니다.")
 
-# 💡 핵심 변경: 흐릿한 실시간 웹캠 대신 고화질 파일 업로더를 메인으로 사용합니다.
-uploaded_file = st.file_uploader("📸 폰 카메라로 찍은 선명한 사진을 올려주세요!", type=["jpg", "jpeg", "png"])
+uploaded_file = st.file_uploader("📸 카메라로 찍은 선명한 사진을 올려주세요!", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
     # 1. 원본 화질 그대로 이미지 불러오기
