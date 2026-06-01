@@ -8,7 +8,7 @@ import os
 from PIL import Image
 
 API_KEY = "uPlMOzPR8zCgJqURmNf2"  
-WORKSPACE_ID = "kittyyunees-workspace"
+WORKSPACE_ID = "kittyunees-workspace"
 PROJECT_ID = "pet-cap-ring-detection"       
 MODEL_VERSION = 3                           
 
