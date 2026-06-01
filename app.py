@@ -46,7 +46,7 @@ if uploaded_file is not None:
   
     cv2.imwrite(temp_path, image_bgr, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
     
-    with st.spinner:
+    with st.spinner("로딩 중..."):
         
         prediction_result = model.predict(temp_path, confidence=25).json()
         predictions = prediction_result.get("predictions", [])
