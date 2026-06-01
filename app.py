@@ -37,25 +37,25 @@ st.write("아이폰/갤럭시 기본 카메라로 찍은 사진을 올리면 PET
 uploaded_file = st.file_uploader("📸 카메라로 찍은 선명한 사진을 올려주세요!", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
-    # 1. 원본 화질 그대로 이미지 불러오기
+   
     image = Image.open(uploaded_file)
     image_np = np.array(image)
     image_bgr = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
     
     temp_path = "temp_input.jpg"
-    # 화질 저하 없이 원본 퀄리티 그대로 임시 저장
+  
     cv2.imwrite(temp_path, image_bgr, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
     
-    with st.spinner("AI가 고화질 원본 분석 중..."):
-        # 💡 신뢰도(Confidence)를 25%로 낮추어 놓치지 않게 설정
+    with st.spinner:
+        
         prediction_result = model.predict(temp_path, confidence=25).json()
         predictions = prediction_result.get("predictions", [])
     
     detected_count = len(predictions)
     
-    # 2. 결과 시각화 (선 두께와 글씨 크기도 고화질에 맞게 크게 조정)
+   
     h_img, w_img, _ = image_bgr.shape
-    scale = max(h_img, w_img) / 1000  # 이미지 크기에 맞게 UI 스케일 조절
+    scale = max(h_img, w_img) / 1000  
     
     for pred in predictions:
         x, y, w, h = int(pred['x']), int(pred['y']), int(pred['width']), int(pred['height'])
@@ -68,7 +68,7 @@ if uploaded_file is not None:
 
     st.image(cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB), caption="분석 결과", use_column_width=True)
     
-    # 3. 데이터 저장
+   
     now = datetime.now().strftime("%Y%m%d_%H%M%S")
     save_filename = f"ring_{now}.jpg"
     save_path = os.path.join(IMAGE_SAVE_DIR, save_filename)
@@ -78,7 +78,6 @@ if uploaded_file is not None:
     new_log.to_csv(CSV_FILE, mode='a', header=False, index=False)
     st.success(f"💾 내 컴퓨터 저장 완료! (검출: {detected_count}개)")
     
-    # 4. 로보플로 서버 전송 오타 수정 (`image_path`로 명시)
     with st.spinner("로보플로 클라우드로 자동 전송 중..."):
         try:
             project.upload(image_path=save_path, batch_name="active_learning_stream")
